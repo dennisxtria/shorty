@@ -1,0 +1,6 @@
+{
+  "providers": {
+    "bitly": "https://api-ssl.bitly.com/v4/shorten",
+    "tinyurl": "http://tinyurl.com/api-create.php?url="
+  }
+}

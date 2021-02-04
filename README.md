@@ -78,3 +78,34 @@ Disclaimer
 ----------
 
 We will not use any of this code for any of Plum's applications.
+
+## EDIT
+# Shorty
+
+## Usage
+
+In order to have all the required Python packages, open a terminal and enter the following:
+
+```bash
+pip install --upgrade -r requirements.txt
+```
+
+### How to run the app
+
+1. In the `shorty` folder execute
+
+    ```bash
+    pip install --upgrade -r requirements.txt
+    ```
+
+    This installs all the required libs.
+
+2. Assign any desired configuration values per environment in `config.{env}.json`, where env is the corresponding environment (i.e. for dev environment this will be `config.dev.json`)
+
+2. Finally, in the same folder execute the command:
+
+    ```bash
+    python run.py {env}
+    ```
+
+Where env is the corresponding environment (i.e. for dev environment the command will be `python run.py dev`)
