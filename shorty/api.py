@@ -30,15 +30,28 @@ def create_shortlink():
     request_provider = request_body.get("provider", "bitly")
 
     if request_provider not in provider_action_dict:
-        abort(404, "The requested URL shortening provider was not found.")
+        abort(404, description="The requested URL shortening provider was not found.")
 
     shortened_link = provider_action_dict[request_provider](request_url)
 
     return jsonify(Response(url=request_url, link=shortened_link).__dict__)
 
 
+@api.app_errorhandler(400)
+def bad_request(e):
+    return jsonify(error=str(e)), 400
+
+
 @api.app_errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
+
 @api.app_errorhandler(405)
+def method_not_allowed(e):
+    return jsonify(error=str(e)), 405
+
+
 @api.app_errorhandler(500)
-def _handle_api_error(ex):
-    return jsonify(error=str(ex))
+def internal_server_error(e):
+    return jsonify(error=str(e)), 500
