@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify, request, abort
-from shorty.config import bitly_url, bitly_headers, tinyurl_url
+from jsonschema import ValidationError
 from requests import post
+from shorty.config import bitly_url, bitly_headers, tinyurl_url
 from shorty.model.response import Response
+from shorty.validation.validator import Validator
 
 
 api = Blueprint("api", __name__)
@@ -26,6 +28,12 @@ provider_action_dict = {"bitly": _post_to_bitly, "tinyurl": _post_to_tinyurl}
 @api.route("/shortlinks", methods=["POST"])
 def create_shortlink():
     request_body = request.get_json()
+
+    try:
+        Validator.validate(request_body)
+    except ValidationError as e:
+        abort(500, description=e.message)
+
     request_url = request_body["url"]
     request_provider = request_body.get("provider", "bitly")
 

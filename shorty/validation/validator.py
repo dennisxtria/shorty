@@ -7,4 +7,4 @@ class Validator(object):
         self.json = json
 
     def validate(self):
-        validate(self.json, schema.SCHEMA)
+        validate(self, schema.SCHEMA)
