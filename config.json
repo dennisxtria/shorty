@@ -1,6 +1,11 @@
 {
   "providers": {
-    "bitly": "https://api-ssl.bitly.com/v4/shorten",
+    "bitly": {
+      "url": "https://api-ssl.bitly.com/v4/shorten",
+      "headers": {
+        "authorization": "Bearer "
+      }
+    },
     "tinyurl": "http://tinyurl.com/api-create.php?url="
   }
 }

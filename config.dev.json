@@ -1,5 +1,9 @@
 {
   "DEBUG": true,
   "TESTING": false,
-  "generic_access_token": "b6cd0d00e370284776784396367ea9a7ef591835"
+  "providers": {
+    "bitly": {
+      "generic_access_token": "b6cd0d00e370284776784396367ea9a7ef591835"
+    }
+  }
 }

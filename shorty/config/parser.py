@@ -37,7 +37,13 @@ def _merge_configs(dict1, dict2):
         elif k in dict1:
             yield (k, dict1[k])
         else:
-            yield (k, dict2[k])
+            if k == "generic_access_token":
+                dict1["headers"]["authorization"] = (
+                    dict1["headers"]["authorization"] + dict2[k]
+                )
+                yield (k, dict1["headers"]["authorization"])
+            else:
+                yield (k, dict2[k])
 
 
 config = create_config()
