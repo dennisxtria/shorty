@@ -4,6 +4,14 @@ from pathlib import Path
 
 
 def create_config():
+    """
+    Creates a merged dictionary between the `config.json` and
+    the respective environment's config, by merging them.
+
+    Sidenote: the implementation for the generic access token
+    was made specific so that the request headers are easily generated
+    with just changing the access token per environment.
+    """
     with open("./config.json", "r") as config_file:
         default_config = json.load(config_file)
 

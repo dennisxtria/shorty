@@ -14,6 +14,13 @@ ALLOWED_PROVIDERS = {"bitly", "tinyurl"}
 
 @api.route("/shortlinks", methods=["POST"])
 def create_shortlink():
+    """
+    Parses and validates the request body and extracts the url and provider
+    fields in order to prepare the POST request for `link_service.shorten_link()`.
+
+    After that, depending on the type of the result, it is either returned
+    with the shortened link, or aborts providing the respective error.
+    """
     request_body = request.get_json()
 
     try:
@@ -33,7 +40,7 @@ def create_shortlink():
         shortened_link_response = Response(url=request_url, link=result).__dict__
         return jsonify(shortened_link_response)
     else:
-        abort(result.status_code)
+        abort(result)
 
 
 @api.app_errorhandler(400)
