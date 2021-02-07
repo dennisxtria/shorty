@@ -1,0 +1,66 @@
+from flask import Blueprint, jsonify, request, abort
+from jsonschema import ValidationError
+
+from shorty.model.response import Response
+from shorty.service.link_service import shorten_link
+from shorty.validation.validator import Validator
+
+
+api = Blueprint("api", __name__)
+
+
+ALLOWED_PROVIDERS = {"bitly", "tinyurl"}
+
+
+@api.route("/shortlinks", methods=["POST"])
+def create_shortlink():
+    request_body = request.get_json()
+
+    try:
+        Validator.validate(request_body)
+    except ValidationError as e:
+        abort(500, description=e.message)
+
+    request_url = request_body["url"]
+    request_provider = request_body.get("provider", "bitly")
+
+    if request_provider not in ALLOWED_PROVIDERS:
+        abort(404, description="The requested URL shortening provider was not found.")
+
+    result = shorten_link(request_url, request_provider)
+
+    if isinstance(result, str):
+        shortened_link_response = Response(url=request_url, link=result).__dict__
+        return jsonify(shortened_link_response)
+    else:
+        abort(result.status_code)
+
+
+@api.app_errorhandler(400)
+def bad_request(e):
+    return jsonify(error=str(e)), 400
+
+
+@api.app_errorhandler(403)
+def forbidden(e):
+    return jsonify(error=str(e)), 403
+
+
+@api.app_errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
+
+@api.app_errorhandler(405)
+def method_not_allowed(e):
+    return jsonify(error=str(e)), 405
+
+
+@api.app_errorhandler(406)
+def not_acceptable(e):
+    return jsonify(error=str(e)), 406
+
+
+@api.app_errorhandler(500)
+def internal_server_error(e):
+    return jsonify(error=str(e)), 500

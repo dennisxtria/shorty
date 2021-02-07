@@ -1,5 +1,6 @@
 from flask import Flask
-from shorty.api import api
+
+from shorty.controller.link_controller import api
 
 
 def create_app(settings_overrides=None):
@@ -10,12 +11,6 @@ def create_app(settings_overrides=None):
 
 
 def configure_settings(app, settings_override):
-    # app.config.update(
-    #     {
-    #         "DEBUG": True,
-    #         "TESTING": False,
-    #     }
-    # )
     if settings_override:
         app.config.update(settings_override)
 
