@@ -26,7 +26,7 @@ def create_shortlink():
     try:
         Validator.validate(request_body)
     except ValidationError as e:
-        abort(500, description=e.message)
+        abort(400, description=e.message)
 
     request_url = request_body["url"]
     request_provider = request_body.get("provider", "bitly")
@@ -66,6 +66,11 @@ def method_not_allowed(e):
 @api.app_errorhandler(406)
 def not_acceptable(e):
     return jsonify(error=str(e)), 406
+
+
+@api.app_errorhandler(422)
+def unprocessable_entity(e):
+    return jsonify(error=str(e)), 422
 
 
 @api.app_errorhandler(500)

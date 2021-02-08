@@ -137,5 +137,8 @@ dmypy.json
 # profiling data
 .prof
 
-#Visual Studio Code
+# Ignore VS Code settings
 .vscode/
+
+# Ignore environment's config.json
+config.*.json

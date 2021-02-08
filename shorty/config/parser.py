@@ -20,7 +20,7 @@ def create_config():
     else:
         env = "dev"
 
-    if env not in {"dev", "staging", "prod"}:
+    if env not in {"dev", "prod", "staging", "test"}:
         raise ValueError("Invalid env name")
 
     env_config_path = Path("./config.{}.json".format(env))
