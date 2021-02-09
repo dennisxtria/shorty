@@ -9,9 +9,6 @@ from shorty.validation.validator import Validator
 api = Blueprint("api", __name__)
 
 
-ALLOWED_PROVIDERS = {"bitly", "tinyurl"}
-
-
 @api.route("/shortlinks", methods=["POST"])
 def create_shortlink():
     """
@@ -30,9 +27,6 @@ def create_shortlink():
 
     request_url = request_body["url"]
     request_provider = request_body.get("provider", "bitly")
-
-    if request_provider not in ALLOWED_PROVIDERS:
-        abort(404, description="The requested URL shortening provider was not found.")
 
     result = shorten_link(request_url, request_provider)
 
