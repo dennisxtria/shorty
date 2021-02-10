@@ -22,6 +22,9 @@ python run.py {env}
 
 Where env is the corresponding environment (i.e. for dev environment the command will be `python run.py dev`)
 
+*edit: the `config.dev.json` file has been deleted, but the needed `generic_access_token` from bitly*
+*has been left if the `devops/config.dev.json` file which was intended for the Dockerfile*
+
 ## How to run the tests
 
 In order to run the tests, while being in the application directory, enter:
@@ -73,4 +76,5 @@ and try out posting a request in a similar way as the aforemention in the `Brows
 There is also a brief explanation of the request, response and their attributes.
 
 *note1: integration tests were not at the desired condition to be committed, so they weren't delivered.*
+
 *note2: the request model, although is not used, was added for possible future use.*
