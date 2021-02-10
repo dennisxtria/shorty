@@ -59,7 +59,7 @@ def mocked_requests_post(*args, **kwargs):
         return MockResponse("Error", "Error", 500)
 
 
-class LinkServiceTestCase(unittest.TestCase):
+class LinkServiceShortenLinkTestCase(unittest.TestCase):
     @mock.patch("shorty.service.link_service.post", side_effect=mocked_requests_post)
     def test_shorten_link_correct_url_with_tinyurl(self, mock_post):
         url_shortened = shorten_link(EXAMPLE_URL, "tinyurl")
@@ -102,6 +102,8 @@ class LinkServiceTestCase(unittest.TestCase):
         )
         self.assertEqual(len(mock_post.call_args_list), 2)
 
+
+class LinkServicePostToProviderTestCase(unittest.TestCase):
     @mock.patch("shorty.service.link_service.post", return_value=200)
     def test_post_to_tinyurl_successful_code_from_tinyurl(self, mock_post):
         response_status_code = _post_to_tinyurl(EXAMPLE_URL)
@@ -110,21 +112,21 @@ class LinkServiceTestCase(unittest.TestCase):
         assert isinstance(response_status_code, int)
 
     @mock.patch("shorty.service.link_service.post", return_value=400)
-    def test__post_to_tinyurl_bad_request_code_from_tinyurl(self, mock_post):
+    def test_post_to_tinyurl_bad_request_code_from_tinyurl(self, mock_post):
         response_status_code = _post_to_tinyurl(EXAMPLE_URL)
 
         assert status_codes.codes.bad_request == response_status_code
         assert isinstance(response_status_code, int)
 
     @mock.patch("shorty.service.link_service.post", return_value=404)
-    def test__post_to_tinyurl_not_found_code_from_tinyurl(self, mock_post):
+    def test_post_to_tinyurl_not_found_code_from_tinyurl(self, mock_post):
         response_status_code = _post_to_tinyurl(EXAMPLE_URL)
 
         assert status_codes.codes.not_found == response_status_code
         assert isinstance(response_status_code, int)
 
     @mock.patch("shorty.service.link_service.post", return_value=500)
-    def test__post_to_tinyurl_internal_server_error_code_from_tinyurl(self, mock_post):
+    def test_post_to_tinyurl_internal_server_error_code_from_tinyurl(self, mock_post):
         response_status_code = _post_to_tinyurl(EXAMPLE_URL)
 
         assert status_codes.codes.internal_server_error == response_status_code

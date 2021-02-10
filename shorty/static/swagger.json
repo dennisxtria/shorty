@@ -1,0 +1,106 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Performs URL shortenings by providing a URL and a desired provider",
+    "version": "1.0.0",
+    "title": "Shorty: A URL shortening REST API",
+    "contact": {
+      "email": "dennistriantafyllis@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "paths": {
+    "/api/shortlinks": {
+      "post": {
+        "tags": [
+          "URL Request"
+        ],
+        "summary": "Returns shortened URL",
+        "requestBody": {
+          "description": "URL Request Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Request"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Response"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          },
+          "406": {
+            "description": "Not Acceptable"
+          },
+          "417": {
+            "description": "Expectation Failed"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Request": {
+        "type": "object",
+        "properties": {
+          "provider": {
+            "type": "string",
+            "format": "bitly"
+          },
+          "url": {
+            "type": "string",
+            "format": "http://example.com"
+          }
+        }
+      },
+      "Response": {
+        "type": "object",
+        "properties": {
+          "link": {
+            "type": "string",
+            "format": "https://bit.ly/36WLB0H"
+          },
+          "url": {
+            "type": "string",
+            "format": "http://example.com"
+          }
+        }
+      }
+    }
+  }
+}
