@@ -1,6 +1,6 @@
+import logging
 from flask import Blueprint, jsonify, request, abort
 from jsonschema import ValidationError
-
 from shorty.model.response import Response
 from shorty.service.link_service import shorten_link
 from shorty.validation.validator import Validator
@@ -12,8 +12,9 @@ api = Blueprint("api", __name__)
 @api.route("/shortlinks", methods=["POST"])
 def create_shortlink():
     """
-    Parses and validates the request body and extracts the url and provider
-    fields in order to prepare the POST request for `link_service.shorten_link()`.
+    Parses and validates the request body and extracts
+    the url and provider fields in order to prepare
+    the POST request for `link_service.shorten_link()`.
 
     After that, depending on the type of the result, it is either returned
     with the shortened link, or aborts providing the respective error.
@@ -21,8 +22,10 @@ def create_shortlink():
     request_body = request.get_json()
 
     try:
+        logging.info("Validating request body")
         Validator.validate(request_body)
     except ValidationError as e:
+        logging.warning(f"Validation failed: {e.message}")
         abort(400, description=e.message)
 
     request_url = request_body["url"]
@@ -31,6 +34,7 @@ def create_shortlink():
     result = shorten_link(request_url, request_provider)
 
     if isinstance(result, str):
+        logging.info(f"{request_url} has been successfully shortened to {result}")
         shortened_link_response = Response(url=request_url, link=result).__dict__
         return jsonify(shortened_link_response)
     else:

@@ -1,6 +1,35 @@
+from logging.config import dictConfig
 from flask import Flask
-
 from shorty.controller.link_controller import api
+
+dictConfig(
+    {
+        "version": 1,
+        "formatters": {
+            "default": {
+                "format": "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+                "datefmt": "%Y/%m/%d %H:%M:%S",
+            },
+            "access": {
+                "format": "%(message)s",
+            },
+        },
+        "handlers": {
+            "console": {
+                "level": "INFO",
+                "class": "logging.StreamHandler",
+                "formatter": "default",
+                "stream": "ext://sys.stdout",
+            },
+            "wsgi": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://flask.logging.wsgi_errors_stream",
+                "formatter": "default",
+            },
+        },
+        "root": {"level": "INFO", "handlers": ["wsgi"]},
+    }
+)
 
 
 def create_app(settings_overrides=None):
