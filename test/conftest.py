@@ -64,6 +64,9 @@ def app(request):
 
 @pytest.fixture(scope="function")
 def client(app, request):
+    """Sets up a test client which is the one that will be executed
+    for each test function.
+    """
     return app.test_client()
 
 
