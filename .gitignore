@@ -142,4 +142,4 @@ dmypy.json
 
 # Ignore environment's config.json
 config.*.json
-!/devops/config.*.json
+devops/config.*.json

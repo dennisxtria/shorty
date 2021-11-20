@@ -1,4 +1,5 @@
 from jsonschema import validate
+
 import shorty.validation.schema as schema
 
 

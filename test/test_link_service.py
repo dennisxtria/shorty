@@ -1,8 +1,9 @@
-from unittest import mock
 import unittest
-from requests import status_codes
-from shorty.service.link_service import shorten_link, _post_to_tinyurl
+from unittest import mock
 
+from requests import status_codes
+
+from shorty.service.link_service import _post_to_tinyurl, shorten_link
 
 EXAMPLE_URL = "http://www.example.com/"
 

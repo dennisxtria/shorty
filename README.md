@@ -22,8 +22,6 @@ python run.py {env}
 
 Where env is the corresponding environment (i.e. for dev environment the command will be `python run.py dev`)
 
-*edit: the `config.dev.json` file has been deleted, but the needed `generic_access_token` from bitly*
-*has been left if the `devops/config.dev.json` file which was intended for the Dockerfile*
 
 ## How to run the tests
 
@@ -88,10 +86,3 @@ flake8 (path/to/code/ which you want to lint)
 ```bash
 black (path/to/code/ which you want to format)
 ```
-
-~~*note1: integration tests were not at the desired condition to be committed, so they weren't delivered.*~~
-
-*note2: the request model, although is not used, was added for possible future use.*
-
-*note3: regarding note1, even though overdue, managed to fix and add link controller tests*
-*also, added instructions on how to run linter (flake8) and formatter (black)*

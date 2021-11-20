@@ -1,10 +1,11 @@
 import logging
-from flask import Blueprint, jsonify, request, abort
+
+from flask import Blueprint, abort, jsonify, request
 from jsonschema import ValidationError
+
 from shorty.model.response import Response
 from shorty.service.link_service import shorten_link
 from shorty.validation.validator import Validator
-
 
 api = Blueprint("api", __name__)
 

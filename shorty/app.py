@@ -1,8 +1,9 @@
 from logging.config import dictConfig
+
 from flask import Flask
 from flask_swagger_ui import get_swaggerui_blueprint
-from shorty.controller.link_controller import api
 
+from shorty.controller.link_controller import api
 
 FLASK_URL = "/api"
 

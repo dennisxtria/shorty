@@ -1,7 +1,9 @@
 import logging
 from typing import Union
+
 from requests import models, post, status_codes
-from shorty.config import bitly_url, bitly_headers, tinyurl_url
+
+from shorty.config import bitly_headers, bitly_url, tinyurl_url
 
 ALLOWED_PROVIDERS = ["bitly", "tinyurl"]
 
